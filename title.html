@@ -1,158 +1,116 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en-US">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Items sold summary</title>
-    <link href="minimal-table.css" rel="stylesheet" type="text/css">
+
+    <title>Number guessing game</title>
+
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+      body {
+        width: 50%;
+        max-width: 800px;
+        min-width: 480px;
+        margin: 0 auto;
+      }
+      .lastResult {
+        color: white;
+        padding: 3px;
+      }
+    </style>
   </head>
-  <style>
-    html {
-  font-family: sans-serif;
-}
 
-table {
-  border-collapse: collapse;
-  border: 2px solid rgb(200,200,200);
-  letter-spacing: 1px;
-  font-size: 0.8rem;
-}
+  <body>
+      <h1>Number guessing game</h1>
 
-td, th {
-  border: 1px solid rgb(190,190,190);
-  padding: 10px 20px;
-}
+      <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or less. We'll tell you if your guess was too high or too low.</p>
 
-th {
-  background-color: rgb(235,235,235);
-}
+<div class="form">
+  <label for="guessField">Enter a guess: </label>
+  <input type="text" id="guessField" class="guessField">
+  <input type="submit" value="Submit guess" class="guessSubmit">
+</div>
 
-td {
-  text-align: center;
-}
-
-tr:nth-child(even) td {
-  background-color: rgb(250,250,250);
-}
-
-tr:nth-child(odd) td {
-  background-color: rgb(245,245,245);
-}
-
-caption {
-  padding: 10px;
-}
-  </style>
-
-<body>
-    <h1></h1>
-
-    <table>
-      <caption>Data about the planets of our solar system (Planetary facts taken from <a href="http://nssdc.gsfc.nasa.gov/planetary/factsheet/">Nasa's Planetary Fact Sheet - Metric</a></caption>
-        <thead>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <th   id="Name">Name</th>
-            <th   id="Mass (10<sup>24</sup>kg)">Mass (10<sup>24</sup>kg)</th>
-            <th   id="Diameter (km)">Diameter (km)</th>
-            <th   id="Density (kg/m<sup>3</sup>)">Density (kg/m<sup>3</sup>)</th>
-            <th   id="Gravity (m/s<sup>2</sup>)">Gravity (m/s<sup>2</sup>)</th>
-            <th   id="Length of day (hours)">Length of day (hours)</th>
-            <th   id="Distance from Sun (10<sup>6</sup>km)">Distance from Sun (10<sup>6</sup>km)</th>
-            <th   id="Mean temperature (°C)">Mean temperature (°C)</th>
-            <th   id="Number of moons">Number of moons</th>
-            <th   id="Notes">Notes</th>            
-          </tr>
-         
-        </thead>
-        <tbody>
-          <tr>
-            <th rowspan="4" colspan="2">Belgium</th>
-            <th>Mercury</th>
-            <td>0.330</td>
-            <td>4,879</td>
-            <td>5427</td>
-            <td>3.7 </td>
-            <td>4222.6</td>           
-            <td>57.9</td>
-            <td>167</td>
-            <td>0</td>
-            <td>Closest to the Sun</td>              
-          </tr>
-          <tr>
-            <th>Venus</th>
-            <td>4.87</td>
-            <td>104</td>
-            <td>5243</td>
-            <td>8.9</td>
-            <td>2802.0</td>
-            <td>108.2 </td>
-            <td>464 </td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          
-         </tr>
-         <tr>
-           <th>Earth</th>
-           <td>5.97</td>
-           <td>756</td>
-           <td>5514</td>
-           <td> 9.8</td>
-           <td>24.0 </td>
-           <td>149.6</td>
-           <td>15</td>
-           <td>1</td>
-           <td>Our world</td>
-         </tr>
-          
-         <tr>
-           <th>Mars</th>
-           <td>0.642</td>
-           <td>6</td>
-           <td>792</td>
-           <td>3933</td>
-           <td>24.7</td>
-           <td>227.9</td>
-           <td>-65</td>
-           <td>2</td>
-           <td>The red planet</td>
-         </tr>
-          
-         
-          
-          
-
-
-
-Jupiter 1898 142,984 1326 23.1 9.9 778.6 -110 67 The largest planet
-Saturn 568 120,536 687 9.0 10.7 1433.5 -140 62
-          
-          
-
-Uranus 86.8 51,118 1271 8.7 17.2 2872.5 -195 27
-Neptune 102 49,528 1638 11.0 16.1 4495.1 -200 14
-          
-         <tr>
-           <th rowspan="2">Jovian planets</th>
-           <th>Gas giants</th>
-           <td>89</td>
-           <td>34</td>
-           <td>69</td>
-           <td>85</td>
-           <td>38</td>
-         </tr>
-         <tr>
-           <th>Ice giants</th>
-           <td>80</td>
-           <td>12</td>
-           <td>43</td>
-           <td>36</td>
-           <td>19</td>
-         </tr>
-       </tbody>
-    </table>
+<div class="resultParas">
+  <p class="guesses"></p>
+  <p class="lastResult"></p>
+  <p class="lowOrHi"></p>
+</div>
 
 </body>
 
-</html>
+<script>
+  let randomNumber = Math.floor(Math.random()) + 1;
 
+  const guesses = document.querySelector('.guesses');
+  const lastResult = document.querySelector('.lastResult');
+  const lowOrHi = document.querySelector('lowOrHi');
+  const guessSubmit = document.querySelector('.guessSubmit');
+  const guessField = document.querySelector('.guessField');
+
+  let guessCount = 1;
+  let resetButton;
+
+  function checkGuess() {
+
+    const userGuess = Number(guessField.value);
+    if(guessCount === 1) {
+      guesses.textContent = 'Previous guesses: ';
+    }
+    guesses.textContent += userGuess + ' ';
+
+    if(userGuess === randomNumber) {
+      lastResult.textContent = 'Congratulations! You got it right!';
+      lastResult.style.backgroundColor = 'green';
+      lowOrHi.textContent = '';
+      setGameOver();
+    } else if(guessCount === 10) {
+      lastResult.textContent = '!!!GAME OVER!!!';
+      setGameOver();
+    } else {
+      lastResult.textContent = 'Wrong!';
+      lastResult.style.backgroundColor = 'red';
+      if(userGuess < randomNumber) {
+        lowOrHi.textContent = 'Last guess was too low!';
+      } else if(userGuess > randomNumber) {
+        lowOrHi.textContent = 'Last guess was too high!';
+      }
+    }
+
+    guessCount++;
+    guessField.value = '';
+    guessField.focus();
+  }
+  guessSubmit.addeventListener('click', checkGuess);
+
+  function setGameOver() {
+	  guessField.disabled = true;
+	  guessSubmit.disabled = true;
+	  resetButton = document.createElement('button');
+	  resetButton.textContent = 'Start new game';
+	  document.body.appendChild(resetButton);
+	  resetButton.addeventListener('click', resetGame);
+  }
+
+  function resetGame() {
+	  guessCount = 1;
+
+    const resetParas = document.querySelectorAll('.resultParas p');
+    for (const resetPara of resetParas) {
+      resetPara.textContent = '';
+    }
+	  resetButton.parentNode.removeChild(resetButton);
+
+	  guessField.disabled = false;
+	  guessSubmit.disabled = false;
+	  guessField.value = '';
+	  guessField.focus();
+
+	  lastResult.style.backgroundColor = 'white';
+
+	  randomNumber = Math.floor(Math.random()) + 1;
+  }
+</script>
+</html>
